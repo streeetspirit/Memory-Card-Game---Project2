@@ -67,6 +67,7 @@ h1 {
     transform: rotateY(-180deg);
     transition: transform 0.3s;
     transform-style: preserve-3d;
+
 }
 
 .deck .card.open {
@@ -76,11 +77,18 @@ h1 {
     transform: rotateY(0deg);
 }
 
+.deck .card.show {
+    background: #02b3e4;
+    cursor: default;
+    font-size: 33px;
+    transform: rotateY(0deg);
+}
 
 .deck .card.match {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
+    transform: rotateY(0deg);
 }
 
 /*

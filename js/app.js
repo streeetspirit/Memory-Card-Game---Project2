@@ -41,38 +41,54 @@ function shuffle(array) {
  *  - display the card's symbol
  *  - add the card to array cardPair of "open" cards
  *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
+ *    + if the cards do match, lock the cards in the open position
+ *    + if the cards do not match, remove the cards from the list and hide the card's symbol
+ *    + increment the move counter and display it on the page
+ *    + if all cards have matched, display a message with the final score
  */
 
 let cardPair = [];
 
 deck.click(function(event) {
   const target = $(event.target);
-  if (target.is("li")) {
+  console.log(target);
+  if (target.is("li") && !target.hasClass("open") && !target.hasClass("match")) {
     showCard(target);
     countCard(target);
   }
 });
 
+// mark card as visible and open (visible status is needed for keeping a card facing up a little longer)
 function showCard (target) {
-    target.addClass("open");
+  target.addClass("open");
+  target.addClass("show");
 }
 
+// add card to a list. if the list already has another card, check to see if the two cards match
 function countCard(target) {
-  cardPair.push(target);
-  console.log(cardPair.length);
-  if (cardPair.length===2)
-  {
-      if (cardPair[0].className==cardPair[1].className)
-      {
-        console.log(cardPair[0]);
-        console.log(cardPair[1].className);
-        target.addClass("match");
-      }
-      target.removeClass("open");
-      cardPair.splice(0,2);
+  cardPair.push(target.find("i").attr('class'));
+  console.log(cardPair);
+  let pairElements = $("ul.deck").find("li.open");
+
+  if (cardPair.length===2) {
+    checkIfMatching(cardPair, pairElements);
+    cleanUpOpenCards(cardPair, pairElements);
   }
+}
+
+// check if cards match, if yes - mark cards as matching
+function checkIfMatching(cardPair, pairElements) {
+  if (cardPair[0]===cardPair[1]) {
+    pairElements.addClass("match");
+  }
+}
+
+// remove Open style for all cards, but show them a little longer on the screen
+function cleanUpOpenCards(cardPair, pairElements) {
+  cardPair.splice(0,2);
+  pairElements.removeClass("open");
+  var intervalId = setInterval(function() {
+    pairElements.removeClass("show");
+    clearInterval(intervalId);
+  }, 500);
 }
