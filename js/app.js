@@ -44,7 +44,6 @@ function shuffle(array) {
  *    + if the cards do match, lock the cards in the open position
  *    + if the cards do not match, remove the cards from the list and hide the card's symbol
  *    + increment the move counter and display it on the page
- *    + if all cards have matched, display a message with the final score
  */
 
 let cardPair = [];
@@ -96,10 +95,13 @@ function checkIfMatching(cardPair, pairElements) {
 function cleanUpOpenCards(cardPair, pairElements) {
   cardPair.splice(0,2);
   pairElements.removeClass("open");
-  let intervalId = setInterval(function() {
+  setTimeout(function() {
     pairElements.removeClass("show");
-    clearInterval(intervalId);
   }, 500);
+  if ($("ul.deck").find("li.match").length === 2) {
+    clearInterval(interval);
+    winnerPopup();
+  }
 }
 
 // here follows implementaion of star counter, moves counter and a timer
@@ -158,4 +160,30 @@ function updateStats() {
   moves_count++;
   moves_count > 1 ? moves.html(moves_count + " moves") : moves.html(moves_count + " move");
 
+//reduce amount of stars if too many moves
+  if (moves_count > 22) {
+    stars.html(`<li><i class="fa fa-star"></i></li>
+    <li><i class="fa fa-star"></i></li>`);
+  } else if (moves_count > 32) {
+    stars.html(`<li><i class="fa fa-star"></i></li>`);
+  }
+  else if (moves_count > 38) {
+    stars.html("");
+  }
+
+}
+
+//if all cards have matched, display a message with the final score
+function winnerPopup () {
+  const popup = $(".popup");
+  const closeit = $(".close");
+  const okBtn = $(".ok");
+  popup.css("display", "block");
+  closeit.click(function(event) {
+    popup.css("display", "none");
+  });
+  okBtn.click(function(event) {
+    popup.css("display", "none");
+  });
+  setToDefault();
 }
