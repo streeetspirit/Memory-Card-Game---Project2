@@ -2,24 +2,24 @@
  * List that holds all cards, two for each picture
  */
 let cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb","fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
-
-shuffle(cards);
+const deck = $(".deck");
 
 /*
  * Display the cards on the page
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-const deck = $(".deck");
-
-for (const card of cards)
-  {
-    let newLi = `<li class="card">
-    <i class="fa ${card}"></i>
-  </li>`
-    deck.append(newLi);
-  }
-
+function resetCanvas() {
+  shuffle(cards);
+  deck.html("");
+  for (const card of cards)
+    {
+      let newLi = `<li class="card">
+      <i class="fa ${card}"></i>
+    </li>`
+      deck.append(newLi);
+    }
+}
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -48,13 +48,22 @@ function shuffle(array) {
  */
 
 let cardPair = [];
+let interval;
+
+resetCanvas();
 
 deck.click(function(event) {
   const target = $(event.target);
   console.log(target);
+
   if (target.is("li") && !target.hasClass("open") && !target.hasClass("match")) {
+    if (!started) {
+      started = true;
+      startTimer();
+    };
     showCard(target);
     countCard(target);
+    updateStats();
   }
 });
 
@@ -87,8 +96,66 @@ function checkIfMatching(cardPair, pairElements) {
 function cleanUpOpenCards(cardPair, pairElements) {
   cardPair.splice(0,2);
   pairElements.removeClass("open");
-  var intervalId = setInterval(function() {
+  let intervalId = setInterval(function() {
     pairElements.removeClass("show");
     clearInterval(intervalId);
   }, 500);
+}
+
+// here follows implementaion of star counter, moves counter and a timer
+// started - flag for starting time counter
+
+let stars_count = 3;
+let moves_count = 0;
+let started = false;
+
+
+const stars = $(".stars");
+const moves = $(".moves");
+const timer = $(".timer");
+const reset = $(".restart");
+
+function setToDefault () {
+  stars_count = 3;
+  moves_count = 0;
+  started = false;
+  stars.html(`<li><i class="fa fa-star"></i></li>
+  <li><i class="fa fa-star"></i></li>
+  <li><i class="fa fa-star"></i></li>`);
+  moves.html(moves_count + " moves");
+  timer.html("00:00:00");
+  clearInterval(interval);
+  console.log (stars.innerHTML);
+
+  // clear and shuffle cards
+  resetCanvas();
+  cardPair = [];
+}
+
+reset.click (function(event) {
+  setToDefault();
+});
+
+function startTimer() {
+  let seconds = 0, minutes = 0, hours = 0;
+
+  interval = setInterval(function() {
+    seconds++;
+    if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes >= 60) {
+            minutes = 0;
+            hours++;
+        }
+    }
+    console.log (seconds);
+    timer.html((hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds));
+  }, 1000);
+}
+
+function updateStats() {
+  moves_count++;
+  moves_count > 1 ? moves.html(moves_count + " moves") : moves.html(moves_count + " move");
+
 }
