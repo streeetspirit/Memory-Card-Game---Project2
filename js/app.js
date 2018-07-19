@@ -64,7 +64,7 @@ deck.click(function(event) {
     countCard(target);
     updateStats();
   }
-  if ($("ul.deck").find("li.match").length === 2) {
+  if ($("ul.deck").find("li.match").length === 16) {
     clearInterval(interval);
     setTimeout(function() {
       winnerPopup();
@@ -166,10 +166,10 @@ function updateStats() {
   if (moves_count > 22) {
     stars.html(`<li><i class="fa fa-star"></i></li>
     <li><i class="fa fa-star"></i></li>`);
-  } else if (moves_count > 32) {
+  } else if (moves_count > 30) {
     stars.html(`<li><i class="fa fa-star"></i></li>`);
   }
-  else if (moves_count > 38) {
+  else if (moves_count > 34) {
     stars.html("");
   }
 
@@ -193,8 +193,6 @@ function winnerPopup () {
   });
 
   scoreRecord = `<li><strong>Time:</strong> ${timer.html()}, <strong>Moves:</strong> ${moves_count}, `;
-  console.log("before " + scoreRecord);
-
   setToDefault();
 }
 // save player's name and hide the popup
@@ -203,14 +201,10 @@ $(".ok").click(function saveRecord(event) {
   scoreRecord += `<strong>Name:</strong> ${name}</li>`;
   $("#scoreboard").append(scoreRecord);
   $(".popup").css("display", "none");
-  console.log("after " + scoreRecord);
-  console.log("saveRecordtriggered");
 });
 
 // if Enter key is pressed in the input field - do the same as if Ok button is pressed
 $(".input").keypress(function(event) {
-
-  console.log("entertriggered");
   if (event.keyCode === 13) {
     event.preventDefault();
     $(".ok").click();

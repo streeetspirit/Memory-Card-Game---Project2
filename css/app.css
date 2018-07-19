@@ -1,3 +1,10 @@
+img,
+embed,
+object,
+video {
+  max-width: 100%;
+}
+
 html {
     box-sizing: border-box;
 }
@@ -39,38 +46,72 @@ h1 {
 /*
  * Styles for the deck of cards
  */
+@media screen and (min-width: 660px) {
+  .deck {
+      width: 660px;
+      min-height: 680px;
+      background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+      padding: 32px;
+      border-radius: 10px;
+      box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 0 3em;
+  }
 
-.deck {
-    width: 660px;
-    min-height: 680px;
-    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
-    padding: 32px;
-    border-radius: 10px;
-    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 0 3em;
+  .deck .card {
+      height: 125px;
+      width: 125px;
+      background: #2e3d49;
+      font-size: 0;
+      color: #ffffff;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+      transform: rotateY(-180deg);
+      transition: transform 0.3s;
+      transform-style: preserve-3d;
+  }
 }
 
-.deck .card {
-    height: 125px;
-    width: 125px;
-    background: #2e3d49;
-    font-size: 0;
-    color: #ffffff;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
-    transform: rotateY(-180deg);
-    transition: transform 0.3s;
-    transform-style: preserve-3d;
+@media screen and (max-width: 659px) {
+  .deck {
+      width: 375px;
+      min-height: 380px;
+      background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 6px 7px 10px 0 rgba(46, 61, 73, 0.5);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 0 3em;
+  }
 
+  .deck .card {
+      height: 80px;
+      width: 80px;
+      background: #2e3d49;
+      font-size: 0;
+      color: #ffffff;
+      border-radius: 3px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 5px 2px 10px 0 rgba(46, 61, 73, 0.5);
+      transform: rotateY(-180deg);
+      transition: transform 0.3s;
+      transform-style: preserve-3d;
+  }
 }
+
 
 .deck .card.open {
     background: #02b3e4;
