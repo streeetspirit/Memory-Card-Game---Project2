@@ -64,6 +64,14 @@ deck.click(function(event) {
     countCard(target);
     updateStats();
   }
+  if ($("ul.deck").find("li.match").length === 2) {
+    clearInterval(interval);
+    setTimeout(function() {
+      winnerPopup();
+    }, 700);
+
+
+  }
 });
 
 // mark card as visible and open (visible status is needed for keeping a card facing up a little longer)
@@ -98,16 +106,12 @@ function cleanUpOpenCards(cardPair, pairElements) {
   setTimeout(function() {
     pairElements.removeClass("show");
   }, 500);
-  if ($("ul.deck").find("li.match").length === 2) {
-    clearInterval(interval);
-    winnerPopup();
-  }
+
 }
 
 // here follows implementaion of star counter, moves counter and a timer
 // started - flag for starting time counter
 
-let stars_count = 3;
 let moves_count = 0;
 let started = false;
 
@@ -118,7 +122,6 @@ const timer = $(".timer");
 const reset = $(".restart");
 
 function setToDefault () {
-  stars_count = 3;
   moves_count = 0;
   started = false;
   stars.html(`<li><i class="fa fa-star"></i></li>
@@ -127,7 +130,6 @@ function setToDefault () {
   moves.html(moves_count + " moves");
   timer.html("00:00:00");
   clearInterval(interval);
-  console.log (stars.innerHTML);
 
   // clear and shuffle cards
   resetCanvas();
@@ -151,7 +153,7 @@ function startTimer() {
             hours++;
         }
     }
-    console.log (seconds);
+
     timer.html((hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds));
   }, 1000);
 }
@@ -173,17 +175,44 @@ function updateStats() {
 
 }
 
+let scoreRecord;
+
 //if all cards have matched, display a message with the final score
 function winnerPopup () {
   const popup = $(".popup");
   const closeit = $(".close");
-  const okBtn = $(".ok");
+  const message = $(".stats");
+  scoreRecord = "";
+  message.html(`<p>It took you ${moves_count} moves to solve it!</p>
+    <p>Your time is ${timer.html()}</p>
+    <ul class="stars">${stars.html()}</ul>`);
+
   popup.css("display", "block");
   closeit.click(function(event) {
     popup.css("display", "none");
   });
-  okBtn.click(function(event) {
-    popup.css("display", "none");
-  });
+
+  scoreRecord = `<li><strong>Time:</strong> ${timer.html()}, <strong>Moves:</strong> ${moves_count}, `;
+  console.log("before " + scoreRecord);
+
   setToDefault();
 }
+// save player's name and hide the popup
+$(".ok").click(function saveRecord(event) {
+  let name = $(".input").val();
+  scoreRecord += `<strong>Name:</strong> ${name}</li>`;
+  $("#scoreboard").append(scoreRecord);
+  $(".popup").css("display", "none");
+  console.log("after " + scoreRecord);
+  console.log("saveRecordtriggered");
+});
+
+// if Enter key is pressed in the input field - do the same as if Ok button is pressed
+$(".input").keypress(function(event) {
+
+  console.log("entertriggered");
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    $(".ok").click();
+  }
+});

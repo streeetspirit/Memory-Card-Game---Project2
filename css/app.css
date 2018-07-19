@@ -31,6 +31,9 @@ body {
 h1 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /*
@@ -49,7 +52,6 @@ h1 {
     justify-content: space-between;
     align-items: center;
     margin: 0 0 3em;
-    perspective: 1000;
 }
 
 .deck .card {
@@ -101,14 +103,14 @@ h1 {
     margin-bottom: 10px;
 }
 
-.score-panel .stars {
+.stars {
     margin: 0;
     padding: 0;
     display: inline-block;
     margin: 0 5px 0 0;
 }
 
-.score-panel .stars li {
+.stars li {
     list-style: none;
     display: inline-block;
 }
@@ -164,18 +166,39 @@ h1 {
  }
 
  .ok {
-     color: #02ccba;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
-     font-size: 33px;
-     font-weight: bold;
+    color: #02ccba;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+    font-size: 33px;
+    font-weight: bold;
+    border-radius: 8px;
+    width:30%
  }
 
  .ok:hover,
  .ok:focus {
-     color: #aa7ecd;
-     text-decoration: none;
-     cursor: pointer;
+    color: #aa7ecd;
+    text-decoration: none;
+    cursor: pointer;
+
  }
+
+/* input form styles */
+.input {
+  margin: 0 1em;
+  border-bottom:1px solid #ccc;
+  font-size: 26px;
+  width:70%
+}
+
+.forminput {
+  margin: 1em 0;
+}
+
+.stats,
+.scoreboard {
+   text-align: center;
+}
