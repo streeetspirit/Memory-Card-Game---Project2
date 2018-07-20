@@ -15,4 +15,9 @@ Flip two card and try to match them. If cards don't match they will flip back. P
 After finishing a game player will be congratulated and given an opportunity to write his name.
 There's a scoreboard, entries are added as they come. It is not stored anywhere else but the current page. It resets with a page refresh.
 
+# Third party libraries and dependencies used in this project
+* jquery
+* font awesome (for icons on cards and UI)
+* Google fonts
+
 Thank you for playing a game!

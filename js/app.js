@@ -169,9 +169,6 @@ function updateStats() {
   } else if (moves_count > 30) {
     stars.html(`<li><i class="fa fa-star"></i></li>`);
   }
-  else if (moves_count > 34) {
-    stars.html("");
-  }
 
 }
 
