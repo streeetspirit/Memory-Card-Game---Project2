@@ -1,7 +1,8 @@
 /*
  * List that holds all cards, two for each picture
  */
-let cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb","fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
+const singlecards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-leaf", "fa-bicycle", "fa-bomb"];
+const cards = singlecards.concat(singlecards);
 const deck = $(".deck");
 
 /*
@@ -163,10 +164,10 @@ function updateStats() {
   moves_count > 1 ? moves.html(moves_count + " moves") : moves.html(moves_count + " move");
 
 //reduce amount of stars if too many moves
-  if (moves_count > 22) {
+  if (moves_count > 22 && moves_count <= 32) {
     stars.html(`<li><i class="fa fa-star"></i></li>
     <li><i class="fa fa-star"></i></li>`);
-  } else if (moves_count > 30) {
+  } else if (moves_count > 33) {
     stars.html(`<li><i class="fa fa-star"></i></li>`);
   }
 
